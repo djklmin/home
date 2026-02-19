@@ -21,7 +21,11 @@
       />
     </transition>
     <div class="content">
-      <!-- 你好朋友！欢迎来到我的个人主页！希望你有美好的一天！ -->
+      <!-- 自定义欢迎文字 -->
+      <div class="welcome-text">
+        你好朋友！欢迎来到我的个人主页！希望你有美好的一天！
+      </div>
+      
       <TimeCapsule />
       <MoreContent />
     </div>
@@ -81,6 +85,34 @@ const closeShow = ref(false);
     padding: 30px;
     width: 100%;
     height: 100%;
+  }
+
+  /* 添加欢迎文字样式 */
+  .welcome-text {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  /* 添加淡入动画 */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 </style>
