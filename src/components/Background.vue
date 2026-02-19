@@ -26,16 +26,6 @@
       @animationend="imgAnimationEnd"
     />
     <div :class="store.backgroundShow ? 'gray hidden' : 'gray'" />
-    <Transition name="fade" mode="out-in">
-      <a
-        v-if="store.backgroundShow && store.coverType != '3' && !useVideo"
-        class="down"
-        :href="bgUrl"
-        target="_blank"
-      >
-        下载壁纸
-      </a>
-    </Transition>
   </div>
 </template>
 
@@ -55,29 +45,27 @@ const bgRandom = Math.floor(Math.random() * 10 + 1);
 
 // 更换壁纸链接
 const changeBg = (type) => {
-  useVideo.value = false; // 默认不使用视频
+  console.log("切换壁纸类型:", type); // 添加日志方便调试
+  useVideo.value = false;
   
   if (type == 0) {
-    // 默认壁纸选项 -> 改为视频
+    // 默认壁纸选项 -> 视频
     useVideo.value = true;
     videoUrl.value = "https://djkl.qzz.io/file/FrHYvLiA.mp4";
   } else if (type == 1) {
-    bgUrl.value = "https://api.dujin.org/bing/1920.php";  // Bing壁纸
+    bgUrl.value = "https://api.dujin.org/bing/1920.php";
   } else if (type == 2) {
-    bgUrl.value = "https://wp.upx8.com/api.php";  // 风景壁纸
+    bgUrl.value = "https://wp.upx8.com/api.php";
   } else if (type == 3) {
-    bgUrl.value = "https://api.yppp.net/api.php";  // 动漫壁纸
+    bgUrl.value = "https://api.yppp.net/api.php"; // 动漫API
   }
 };
 
 // 图片加载完成
 const imgLoadComplete = () => {
-  imgTimeout.value = setTimeout(
-    () => {
-      store.setImgLoadStatus(true);
-    },
-    Math.floor(Math.random() * (600 - 300 + 1)) + 300,
-  );
+  imgTimeout.value = setTimeout(() => {
+    store.setImgLoadStatus(true);
+  }, Math.floor(Math.random() * (600 - 300 + 1)) + 300);
 };
 
 // 视频加载完成
@@ -89,7 +77,6 @@ const videoLoadComplete = () => {
 
 // 图片动画完成
 const imgAnimationEnd = () => {
-  console.log("壁纸加载且动画完成");
   emit("loadComplete");
 };
 
@@ -98,10 +85,7 @@ const imgLoadError = () => {
   console.error("壁纸加载失败：", bgUrl.value);
   ElMessage({
     message: "壁纸加载失败，已临时切换回默认",
-    icon: h(Error, {
-      theme: "filled",
-      fill: "#efefef",
-    }),
+    icon: h(Error, { theme: "filled", fill: "#efefef" }),
   });
   bgUrl.value = `/images/background${bgRandom}.jpg`;
 };
@@ -110,7 +94,7 @@ const imgLoadError = () => {
 const videoLoadError = () => {
   console.error("视频加载失败，切换回动漫图片");
   useVideo.value = false;
-  bgUrl.value = "https://api.yppp.net/api.php";  // 切换回动漫图片
+  bgUrl.value = "https://api.yppp.net/api.php";
   ElMessage({
     message: "视频加载失败，已切换为动漫壁纸",
     grouping: true,
@@ -124,11 +108,15 @@ watch(
   (value) => {
     changeBg(value);
   },
+  { immediate: true } // 加上这个确保首次加载就执行
 );
 
 onMounted(() => {
-  // 加载壁纸 - 默认使用动漫壁纸（type=3）
-  changeBg(store.coverType || 3);  // 默认打开是动漫API
+  // 关键：这里强制设置为3（动漫API）
+  if (!store.coverType) {
+    store.coverType = "3"; // 如果store里没有，设置为3
+  }
+  changeBg("3"); // 直接强制加载动漫API
 });
 
 onBeforeUnmount(() => {
@@ -159,9 +147,6 @@ onBeforeUnmount(() => {
     object-fit: cover;
     backface-visibility: hidden;
     filter: blur(20px) brightness(0.3);
-    transition:
-      filter 0.3s,
-      transform 0.3s;
     animation: fade-blur-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     animation-delay: 0.45s;
   }
@@ -180,34 +165,6 @@ onBeforeUnmount(() => {
     &.hidden {
       opacity: 0;
       transition: 1.5s;
-    }
-  }
-  
-  .down {
-    font-size: 16px;
-    color: white;
-    position: absolute;
-    bottom: 30px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    display: block;
-    padding: 20px 26px;
-    border-radius: 8px;
-    background-color: #00000030;
-    width: 120px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    &:hover {
-      transform: scale(1.05);
-      background-color: #00000060;
-    }
-    
-    &:active {
-      transform: scale(1);
     }
   }
 }
