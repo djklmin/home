@@ -50,7 +50,7 @@ const imgTimeout = ref(null);
 const useVideo = ref(false);
 const emit = defineEmits(["loadComplete"]);
 
-// 壁纸随机数（保留作为图片备选）
+// 壁纸随机数
 const bgRandom = Math.floor(Math.random() * 10 + 1);
 
 // 更换壁纸链接
@@ -58,7 +58,7 @@ const changeBg = (type) => {
   useVideo.value = false; // 默认不使用视频
   
   if (type == 0) {
-    // 默认壁纸 -> 改为使用视频
+    // 默认壁纸 -> 使用视频
     useVideo.value = true;
     videoUrl.value = "https://djkl.qzz.io/file/FrHYvLiA.mp4";
   } else if (type == 1) {
@@ -103,30 +103,19 @@ const imgLoadError = () => {
       fill: "#efefef",
     }),
   });
-  // 如果当前是默认壁纸（原为视频）失败，则使用本地图片
-  if (store.coverType == 0) {
-    bgUrl.value = `/images/background${bgRandom}.jpg`;
-    useVideo.value = false;
-  } else {
-    bgUrl.value = `/images/background${bgRandom}.jpg`;
-  }
+  bgUrl.value = `/images/background${bgRandom}.jpg`;
 };
 
 // 视频加载失败
 const videoLoadError = () => {
-  console.error("视频加载失败，切换回图片");
+  console.error("视频加载失败，切换回动漫图片");
   useVideo.value = false;
-  // 如果当前是默认壁纸（原为视频）失败，则使用动漫图片作为备选
-  if (store.coverType == 0) {
-    bgUrl.value = "https://api.yppp.net/api.php";
-    ElMessage({
-      message: "默认视频加载失败，已切换为动漫图片",
-      grouping: true,
-      type: "warning",
-    });
-  } else {
-    bgUrl.value = `/images/background${bgRandom}.jpg`;
-  }
+  bgUrl.value = "https://api.yppp.net/api.php";  // 视频失败就切回动漫
+  ElMessage({
+    message: "视频加载失败，已切换为动漫图片",
+    grouping: true,
+    type: "warning",
+  });
 };
 
 // 监听壁纸切换
@@ -138,8 +127,8 @@ watch(
 );
 
 onMounted(() => {
-  // 加载壁纸 - 默认使用新的默认视频（type=0）
-  changeBg(store.coverType || 0);
+  // 加载壁纸 - 默认使用动漫壁纸（type=3）
+  changeBg(store.coverType || 3);  // 默认打开是动漫
 });
 
 onBeforeUnmount(() => {
