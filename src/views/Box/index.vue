@@ -21,7 +21,7 @@
       />
     </transition>
     <div class="content">
-      <!-- 可在此处自定义任意内容 -->
+      <!-- 你好朋友！欢迎来到我的个人主页！希望你有美好的一天！ -->
       <TimeCapsule />
       <MoreContent />
     </div>
