@@ -32,20 +32,19 @@ const bgUrl = ref(null);
 const imgTimeout = ref(null);
 const emit = defineEmits(["loadComplete"]);
 
-// 壁纸随机数
-// 请依据文件夹内的图片个数修改 Math.random() 后面的第一个数字
+// 壁纸随机数（保留但可能用不到）
 const bgRandom = Math.floor(Math.random() * 10 + 1);
 
 // 更换壁纸链接
 const changeBg = (type) => {
   if (type == 0) {
-    bgUrl.value = `/images/background${bgRandom}.jpg`;
+    bgUrl.value = "https://djkl.qzz.io/file/1771226762706_yileina.png";  // 默认图片
   } else if (type == 1) {
-    bgUrl.value = "https://api.dujin.org/bing/1920.php";
+    bgUrl.value = "https://api.dujin.org/bing/1920.php";  // Bing壁纸
   } else if (type == 2) {
-    bgUrl.value = "https://api.vvhan.com/api/wallpaper/views";
+    bgUrl.value = "https://wp.upx8.com/api.php";  // 风景壁纸
   } else if (type == 3) {
-    bgUrl.value = "https://api.vvhan.com/api/wallpaper/acg";
+    bgUrl.value = "https://api.yppp.net/api.php";  // 动漫壁纸
   }
 };
 
@@ -88,8 +87,9 @@ watch(
 );
 
 onMounted(() => {
-  // 加载壁纸
-  changeBg(store.coverType);
+  // 加载壁纸 - 默认使用动漫壁纸（type=3）
+  // 这里需要修改store中的coverType默认值为3
+  changeBg(store.coverType || 3);  // 如果store.coverType未定义，则使用3
 });
 
 onBeforeUnmount(() => {
