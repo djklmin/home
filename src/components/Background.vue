@@ -58,7 +58,7 @@ const changeBg = (type) => {
   useVideo.value = false; // 默认不使用视频
   
   if (type == 0) {
-    // 默认壁纸 -> 使用视频
+    // 默认壁纸选项 -> 改为视频
     useVideo.value = true;
     videoUrl.value = "https://djkl.qzz.io/file/FrHYvLiA.mp4";
   } else if (type == 1) {
@@ -110,9 +110,9 @@ const imgLoadError = () => {
 const videoLoadError = () => {
   console.error("视频加载失败，切换回动漫图片");
   useVideo.value = false;
-  bgUrl.value = "https://api.yppp.net/api.php";  // 视频失败就切回动漫
+  bgUrl.value = "https://api.yppp.net/api.php";  // 切换回动漫图片
   ElMessage({
-    message: "视频加载失败，已切换为动漫图片",
+    message: "视频加载失败，已切换为动漫壁纸",
     grouping: true,
     type: "warning",
   });
@@ -128,7 +128,7 @@ watch(
 
 onMounted(() => {
   // 加载壁纸 - 默认使用动漫壁纸（type=3）
-  changeBg(store.coverType || 3);  // 默认打开是动漫
+  changeBg(store.coverType || 3);  // 默认打开是动漫API
 });
 
 onBeforeUnmount(() => {
