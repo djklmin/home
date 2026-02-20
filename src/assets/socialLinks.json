@@ -20,7 +20,13 @@
   {
     "name": "Telegram",
     "icon": "/images/icon/telegram.png",
-    "tip": "你懂的 ~",
+    "tip": "纸飞机！",
     "url": "https://t.me/mindjkl"
+  },
+  {
+    "name": "Twitter",
+    "icon": "/images/icon/twitter.png",
+    "tip": "你懂的 ~",
+    "url": "https://x.com/mindjkl/"
   }
 ]
