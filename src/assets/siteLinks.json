@@ -2,7 +2,7 @@
   {
     "icon": "Blog",
     "name": "博客",
-    "link": "https://flyblog.qzz.io/"
+    "link": "https://blog.346247.xyz"
   },
   {
     "icon": "Cloud",
@@ -12,12 +12,12 @@
   {
     "icon": "Compass",
     "name": "管理",
-    "link": "https://flyminos.qzz.io/"
+    "link": "https://cms.346247.xyz"
   },
   {
     "icon": "Book",
     "name": "订阅管理",
-    "link": "https://st.djkl.qzz.io/"
+    "link": "https://dy.346247.xyz"
   },
   {
     "icon": "Fire",
@@ -27,6 +27,6 @@
   {
     "icon": "LaptopCode",
     "name": "站点监测",
-    "link": "https://s.flyblog.qzz.io/"
+    "link": "https://s..346247.xyz"
   }
 ]
